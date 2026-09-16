@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Event Management</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #222;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            width: 230px;
+            height: 100vh;
+            background: #172554;
+            color: white;
+            padding: 25px 15px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .logo h2 {
+            color: #60a5fa;
+        }
+
+        .menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 14px;
+            margin: 8px 0;
+            border-radius: 8px;
+        }
+
+        .menu a:hover,
+        .menu .active {
+            background: #2563eb;
+        }
+
+        /* Main */
+        .main {
+            margin-left: 230px;
+            padding: 25px;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .top h1 {
+            color: #172554;
+        }
+
+        .profile {
+            background: white;
+            padding: 10px 18px;
+            border-radius: 25px;
+            box-shadow: 0 2px 8px #ddd;
+        }
+
+        /* Cards */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px #ddd;
+        }
+
+        .card h3 {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .card h2 {
+            margin-top: 10px;
+            color: #2563eb;
+        }
+
+        /* Sections */
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px #ddd;
+            margin-bottom: 25px;
+        }
+
+        .section h2 {
+            margin-bottom: 20px;
+            color: #172554;
+        }
+
+        /* Events */
+        .events {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .event-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 18px;
+        }
+
+        .event-card h3 {
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+
+        .event-card p {
+            margin: 7px 0;
+            color: #555;
+        }
+
+        /* Form */
+        .form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 11px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        .full {
+            grid-column: 1 / 3;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        /* Table */
+        .search {
+            margin-bottom: 15px;
+        }
+
+        .search input {
+            max-width: 350px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #172554;
+            color: white;
+        }
+
+        .delete {
+            background: #ef4444;
+            padding: 7px 12px;
+        }
+
+        .delete:hover {
+            background: #dc2626;
+        }
+
+        /* Responsive */
+        @media(max-width: 900px) {
+
+            .sidebar {
+                width: 180px;
+            }
+
+            .main {
+                margin-left: 180px;
+            }
+
+            .cards,
+            .events {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media(max-width: 600px) {
+
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .cards,
+            .events,
+            .form {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+    <div class="logo">
+        <h2>🎓 EventHub</h2>
+        <p>Student Portal</p>
+    </div>
+
+    <div class="menu">
+        <a href="#" class="active">📊 Dashboard</a>
+        <a href="#events">📅 Events</a>
+        <a href="#register">📝 Registration</a>
+        <a href="#students">👨‍🎓 Students</a>
+    </div>
+
+</div>
+
+
+<!-- Main Content -->
+
+<div class="main">
+
+    <div class="top">
+        <div>
+            <h1>Student Event Management</h1>
+            <p>Manage college events and student registrations</p>
+        </div>
+
+        <div class="profile">
+            👤 Admin
+        </div>
+    </div>
+
+
+    <!-- Dashboard Cards -->
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>Total Events</h3>
+            <h2 id="eventCount">3</h2>
+        </div>
+
+        <div class="card">
+            <h3>Registered Students</h3>
+            <h2 id="studentCount">0</h2>
+        </div>
+
+        <div class="card">
+            <h3>Upcoming Events</h3>
+            <h2>3</h2>
+        </div>
+
+        <div class="card">
+            <h3>Departments</h3>
+            <h2>5</h2>
+        </div>
+
+    </div>
+
+
+    <!-- Events -->
+
+    <div class="section" id="events">
+
+        <h2>Upcoming Events</h2>
+
+        <div class="events">
+
+            <div class="event-card">
+                <h3>Tech Fest 2026</h3>
+                <p>📅 25 September 2026</p>
+                <p>📍 Main Auditorium</p>
+                <p>💻 Technical</p>
+            </div>
+
+            <div class="event-card">
+                <h3>Cultural Fest</h3>
+                <p>📅 30 September 2026</p>
+                <p>📍 Open Ground</p>
+                <p>🎭 Cultural</p>
+            </div>
+
+            <div class="event-card">
+                <h3>Sports Meet</h3>
+                <p>📅 5 October 2026</p>
+                <p>📍 Sports Ground</p>
+                <p>🏆 Sports</p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Registration -->
+
+    <div class="section" id="register">
+
+        <h2>Student Registration</h2>
+
+        <form id="eventForm" class="form">
+
+            <div>
+                <label>Student Name</label>
+                <input type="text" id="name" placeholder="Enter student name" required>
+            </div>
+
+            <div>
+                <label>Student ID</label>
+                <input type="text" id="studentId" placeholder="Enter student ID" required>
+            </div>
+
+            <div>
+                <label>Department</label>
+                <select id="department" required>
+                    <option value="">Select Department</option>
+                    <option>CSE</option>
+                    <option>ECE</option>
+                    <option>EEE</option>
+                    <option>Mechanical</option>
+                    <option>Civil</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Event</label>
+                <select id="event" required>
+                    <option value="">Select Event</option>
+                    <option>Tech Fest 2026</option>
+                    <option>Cultural Fest</option>
+                    <option>Sports Meet</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Event Type</label>
+                <select id="eventType" required>
+                    <option value="">Select Type</option>
+                    <option>Technical</option>
+                    <option>Cultural</option>
+                    <option>Sports</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Phone Number</label>
+                <input type="tel" id="phone" placeholder="Enter phone number" required>
+            </div>
+
+            <div>
+                <label>Event Date</label>
+                <input type="date" id="date" required>
+            </div>
+
+            <div class="full">
+                <button type="submit">Register Student</button>
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- Students -->
+
+    <div class="section" id="students">
+
+        <h2>Registered Students</h2>
+
+        <div class="search">
+            <input type="text"
+                   id="search"
+                   placeholder="🔍 Search student..."
+                   onkeyup="searchStudent()">
+        </div>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>ID</th>
+                    <th>Department</th>
+                    <th>Event</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="studentList"></tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    let count = 0;
+
+    document.getElementById("eventForm").addEventListener("submit", function(e) {
+
+        e.preventDefault();
+
+        let name = document.getElementById("name").value;
+        let id = document.getElementById("studentId").value;
+        let dept = document.getElementById("department").value;
+        let event = document.getElementById("event").value;
+        let type = document.getElementById("eventType").value;
+        let date = document.getElementById("date").value;
+
+        let table = document.getElementById("studentList");
+
+        let row = table.insertRow();
+
+        row.innerHTML = `
+            <td>${name}</td>
+            <td>${id}</td>
+            <td>${dept}</td>
+            <td>${event}</td>
+            <td>${type}</td>
+            <td>${date}</td>
+            <td>
+                <button class="delete"
+                onclick="deleteStudent(this)">Delete</button>
+            </td>
+        `;
+
+        count++;
+        document.getElementById("studentCount").innerText = count;
+
+        document.getElementById("eventForm").reset();
+
+        alert("Student registered successfully!");
+
+    });
+
+
+    function deleteStudent(button) {
+
+        button.parentElement.parentElement.remove();
+
+        count--;
+
+        document.getElementById("studentCount").innerText = count;
+    }
+
+
+    function searchStudent() {
+
+        let search = document.getElementById("search").value.toLowerCase();
+
+        let rows = document
+            .getElementById("studentList")
+            .getElementsByTagName("tr");
+
+        for (let row of rows) {
+
+            let text = row.innerText.toLowerCase();
+
+            row.style.display =
+                text.includes(search) ? "" : "none";
+        }
+    }
+
+</script>
+
+</body>
+</html>
